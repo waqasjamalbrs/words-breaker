@@ -1,7 +1,5 @@
 import streamlit as st
 import re
-# Copy button library import karein
-from st_copy_to_clipboard import st_copy_to_clipboard
 
 st.set_page_config(page_title="Script Splitter Pro", page_icon="✂️", layout="wide")
 
@@ -44,7 +42,7 @@ def split_text_strictly(text, limit, unit_type):
 # --- UI Interface ---
 
 st.title("✂️ Script Splitter (Strict Full Stop)")
-st.markdown("Split long scripts & Copy with one click.")
+st.markdown("Split long scripts & Copy easily.")
 
 # 1. Input Section
 tab1, tab2 = st.tabs(["📝 Paste Text", "📂 Upload .txt File"])
@@ -96,6 +94,7 @@ if st.button("🚀 Split Script", type="primary"):
         result_chunks = split_text_strictly(final_text, process_limit, unit_option)
         
         st.subheader(f"✅ Result: {len(result_chunks)} Parts")
+        st.caption("Hover over the text box to see the Copy button (top-right corner).")
         
         for i, chunk in enumerate(result_chunks):
             c_len = len(chunk)
@@ -103,8 +102,5 @@ if st.button("🚀 Split Script", type="primary"):
             label = f"Part {i+1} — ({w_len} Words / {c_len} Chars)"
             
             with st.expander(label, expanded=True):
-                # Yahan "Copy" Button lagaya hai
-                st_copy_to_clipboard(chunk, f"📋 Click to Copy Part {i+1}")
-                
-                # Text ko display karwaya hai (Code block mai taake clean lagay)
+                # st.code automatically provides a copy button on hover
                 st.code(chunk, language="text")
